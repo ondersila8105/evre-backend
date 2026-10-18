@@ -46,3 +46,6 @@ def lead_listele():
         return jsonify({"basari": True, "data": kayitlar}), 200
     except Exception as e:
         return jsonify({"basari": False, "hata": str(e)}), 500
+    @app.route('/api/health', methods=['GET'])
+def health_check():
+    return jsonify({"status": "healthy", "message": "EVRE Backend calisiyor!"}), 200
