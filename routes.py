@@ -5,6 +5,11 @@ from database import lead_ekle, tum_leadler
 # API Rotaları için Blueprint oluşturuyoruz
 api_bp = Blueprint('api', __name__)
 
+@api_bp.route('/health', methods=['GET'])
+def health_check():
+    """Sağlık kontrolü uç noktası"""
+    return jsonify({"status": "healthy", "message": "EVRE Backend çalışıyor!"}), 200
+
 @api_bp.route('/sohbet', methods=['POST'])
 def sohbet():
     """Wix üzerinden gelen kullanıcı mesajını alır ve AI yanıtı döndürür."""
@@ -46,6 +51,3 @@ def lead_listele():
         return jsonify({"basari": True, "data": kayitlar}), 200
     except Exception as e:
         return jsonify({"basari": False, "hata": str(e)}), 500
-    @app.route('/api/health', methods=['GET'])
-def health_check():
-    return jsonify({"status": "healthy", "message": "EVRE Backend calisiyor!"}), 200
