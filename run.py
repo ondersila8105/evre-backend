@@ -10,7 +10,7 @@ def create_app():
     app.config.from_object(config)
 
     # CORS İzinleri (Wix Studio frontend bağlantısı için)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app)
 
     # Veritabanını başlat
     init_db()
