@@ -32,13 +32,14 @@ def yeni_lead():
     data = request.get_json() or {}
     isim = data.get('isim')
     telefon = data.get('telefon')
+    email = data.get('email', '')  # <-- 1. YENİ: Wix'ten gelen email verisini çekiyoruz
     mesaj = data.get('mesaj', '')
 
     if not isim or not telefon:
         return jsonify({"basari": False, "hata": "İsim ve telefon alanları zorunludur"}), 400
 
     try:
-        lead_ekle(isim, telefon, mesaj)
+        lead_ekle(isim, telefon, email, mesaj)  # <-- 2. YENİ: email parametresini ekledik
         return jsonify({"basari": True, "mesaj": "Müşteri adayı başarıyla kaydedildi"}), 201
     except Exception as e:
         return jsonify({"basari": False, "hata": f"Veritabanı Hatası: {str(e)}"}), 500
