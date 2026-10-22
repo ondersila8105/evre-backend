@@ -17,6 +17,7 @@ def init_db():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             isim TEXT NOT NULL,
             telefon TEXT NOT NULL,
+            email TEXT,
             mesaj TEXT,
             tarih TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
@@ -24,13 +25,13 @@ def init_db():
     conn.commit()
     conn.close()
 
-def lead_ekle(isim, telefon, mesaj=""):
+def lead_ekle(isim, telefon, email="", mesaj=""):
     """Yeni bir müşteri adayı kaydeder (SQL Injection korumalı)."""
     conn = get_db()
     cursor = conn.cursor()
     cursor.execute(
-        "INSERT INTO leads (isim, telefon, mesaj) VALUES (?, ?, ?)",
-        (isim, telefon, mesaj)
+        "INSERT INTO leads (isim, telefon, email, mesaj) VALUES (?, ?, ?, ?)",
+        (isim, telefon, email, mesaj)
     )
     conn.commit()
     conn.close()
@@ -39,7 +40,7 @@ def tum_leadler():
     """Tüm müşteri adaylarını en yeniden eskiye doğru listeler."""
     conn = get_db()
     cursor = conn.cursor()
-    cursor.execute("SELECT id, isim, telefon, mesaj, tarih FROM leads ORDER BY id DESC")
+    cursor.execute("SELECT id, isim, telefon, email, mesaj, tarih FROM leads ORDER BY id DESC")
     rows = cursor.fetchall()
     conn.close()
     
@@ -50,6 +51,7 @@ def tum_leadler():
             "id": row["id"],
             "isim": row["isim"],
             "telefon": row["telefon"],
+            "email": row["email"],
             "mesaj": row["mesaj"],
             "tarih": row["tarih"]
         })
