@@ -35,7 +35,7 @@ class AIService:
         messages.append({"role": "user", "content": mesaj})
 
         data = {
-            "model": "lopenai/gpt-oss-20b",
+            "model": "openai/gpt-oss-20b",
             "messages": messages,
             "temperature": 0.7
         }
